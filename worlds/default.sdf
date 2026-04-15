@@ -7,13 +7,13 @@
       <real_time_update_rate>250</real_time_update_rate>
     </physics>
     <gravity>0 0 -9.8</gravity>
-    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <magnetic_field>1.32e-06 2.16e-05 -4.34e-05</magnetic_field>
     <atmosphere type="adiabatic"/>
     <scene>
       <grid>false</grid>
       <ambient>0.4 0.4 0.4 1</ambient>
       <background>0.7 0.7 0.7 1</background>
-      <shadows>true</shadows>
+      <shadows>false</shadows>
     </scene>
     <model name="ground_plane">
       <static>true</static>
@@ -22,7 +22,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>1 1</size>
+              <size>621 617</size>
             </plane>
           </geometry>
           <surface>
@@ -37,13 +37,18 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>500 500</size>
+              <size>621 617</size>
             </plane>
           </geometry>
           <material>
-            <ambient>0.8 0.8 0.8 1</ambient>
-            <diffuse>0.8 0.8 0.8 1</diffuse>
-            <specular>0.8 0.8 0.8 1</specular>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>0 0 0 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://satellite_ground/materials/textures/satellite.jpg</albedo_map>
+              </metal>
+            </pbr>
           </material>
         </visual>
         <pose>0 0 0 0 -0 0</pose>

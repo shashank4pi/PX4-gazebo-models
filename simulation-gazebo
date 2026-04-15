@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import platform
 import subprocess
 import os
 import shutil
@@ -96,7 +97,9 @@ def main():
         cmd += f'GZ_SIM_SERVER_CONFIG_PATH={args.model_store}/server.config '
         cmd += f'gz sim -r {args.model_store}/worlds/{args.world}.sdf'
 
-        if args.headless:
+        is_macos = platform.system() == 'Darwin'
+
+        if args.headless or is_macos:
             cmd = f'{cmd} -s'
 
         if args.gz_partition:
@@ -107,10 +110,25 @@ def main():
         try:
             process_handle = run(cmd)
 
+            # On macOS, launch the GUI in a separate process
+            gui_handle = None
+            if is_macos and not args.headless:
+                gui_cmd = 'gz sim -g'
+                if args.gz_partition:
+                    gui_cmd = f'GZ_PARTITION={args.gz_partition} {gui_cmd}'
+                if args.gz_ip:
+                    gui_cmd = f'GZ_IP={args.gz_ip} {gui_cmd}'
+                gui_handle = run(gui_cmd)
+
             while process_handle.poll() is None:
                 process_handle.wait()
 
+            if gui_handle:
+                gui_handle.terminate()
+
         except KeyboardInterrupt:
+            if gui_handle:
+                gui_handle.terminate()
             exit(0)
 
 if __name__ == "__main__":
