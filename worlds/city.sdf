@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Procedural city block: 4×4 grid of buildings with mixed heights/colours,
+     two-way roads with lane markings, scattered trees and lampposts.
+     ~100 × 100 m playable area.  Heavier than town.sdf — use for VTOL
+     kamikaze descent / rover lidar mapping / city-cruise demos. -->
+<sdf version="1.9">
+  <world name="city">
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>1.32e-06 2.16e-05 -4.34e-05</magnetic_field>
+    <atmosphere type="adiabatic"/>
+    <scene>
+      <grid>false</grid>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.78 0.9 1</background>
+      <shadows>false</shadows>
+    </scene>
+
+    <model name="ground"><static>true</static>
+      <link name="link">
+        <collision name="c"><geometry><plane><normal>0 0 1</normal><size>400 400</size></plane></geometry>
+          <surface><friction><ode/></friction><bounce/><contact/></surface></collision>
+        <visual name="v"><geometry><plane><normal>0 0 1</normal><size>400 400</size></plane></geometry>
+          <material><ambient>0.45 0.55 0.30 1</ambient><diffuse>0.45 0.55 0.30 1</diffuse></material></visual>
+        <inertial><mass>1</mass><inertia><ixx>1</ixx><ixy>0</ixy><ixz>0</ixz><iyy>1</iyy><iyz>0</iyz><izz>1</izz></inertia></inertial>
+      </link>
+    </model>
+
+    <!-- Roads: 3 east-west + 3 north-south, on a 30 m grid. -->
+    <!-- east-west roads -->
+    <model name="rd_ew_n"><static>true</static><pose>0  30 0.025 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>100 6 0.05</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>100 6 0.05</size></box></geometry>
+        <material><ambient>0.20 0.20 0.21 1</ambient><diffuse>0.20 0.20 0.21 1</diffuse></material></visual></link></model>
+    <model name="rd_ew_c"><static>true</static><pose>0   0 0.025 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>100 6 0.05</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>100 6 0.05</size></box></geometry>
+        <material><ambient>0.20 0.20 0.21 1</ambient><diffuse>0.20 0.20 0.21 1</diffuse></material></visual></link></model>
+    <model name="rd_ew_s"><static>true</static><pose>0 -30 0.025 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>100 6 0.05</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>100 6 0.05</size></box></geometry>
+        <material><ambient>0.20 0.20 0.21 1</ambient><diffuse>0.20 0.20 0.21 1</diffuse></material></visual></link></model>
+
+    <!-- north-south roads -->
+    <model name="rd_ns_w"><static>true</static><pose>-30 0 0.025 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>6 100 0.05</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>6 100 0.05</size></box></geometry>
+        <material><ambient>0.20 0.20 0.21 1</ambient><diffuse>0.20 0.20 0.21 1</diffuse></material></visual></link></model>
+    <model name="rd_ns_c"><static>true</static><pose>  0 0 0.025 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>6 100 0.05</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>6 100 0.05</size></box></geometry>
+        <material><ambient>0.20 0.20 0.21 1</ambient><diffuse>0.20 0.20 0.21 1</diffuse></material></visual></link></model>
+    <model name="rd_ns_e"><static>true</static><pose> 30 0 0.025 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>6 100 0.05</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>6 100 0.05</size></box></geometry>
+        <material><ambient>0.20 0.20 0.21 1</ambient><diffuse>0.20 0.20 0.21 1</diffuse></material></visual></link></model>
+
+    <!-- Centre-line markings (white dashes on the centre EW road only — enough
+         signal for a downward-looking matcher to lock on). -->
+    <model name="mark1"><static>true</static><pose>-30 0 0.06 0 0 0</pose><link name="l">
+      <visual name="v"><geometry><box><size>4 0.3 0.01</size></box></geometry><material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material></visual></link></model>
+    <model name="mark2"><static>true</static><pose>-15 0 0.06 0 0 0</pose><link name="l">
+      <visual name="v"><geometry><box><size>4 0.3 0.01</size></box></geometry><material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material></visual></link></model>
+    <model name="mark3"><static>true</static><pose>  0 0 0.06 0 0 0</pose><link name="l">
+      <visual name="v"><geometry><box><size>4 0.3 0.01</size></box></geometry><material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material></visual></link></model>
+    <model name="mark4"><static>true</static><pose> 15 0 0.06 0 0 0</pose><link name="l">
+      <visual name="v"><geometry><box><size>4 0.3 0.01</size></box></geometry><material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material></visual></link></model>
+    <model name="mark5"><static>true</static><pose> 30 0 0.06 0 0 0</pose><link name="l">
+      <visual name="v"><geometry><box><size>4 0.3 0.01</size></box></geometry><material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material></visual></link></model>
+
+    <!-- 16 buildings — 4×4 grid of blocks, mixed heights and colours.
+         Block centers at ±15, ±45 on both axes; building sized 10×10×H. -->
+    <model name="b00"><static>true</static><pose>-45 -45  2.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 4</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 4</size></box></geometry><material><ambient>0.85 0.78 0.65 1</ambient><diffuse>0.85 0.78 0.65 1</diffuse></material></visual></link></model>
+    <model name="b01"><static>true</static><pose>-15 -45  4.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 8</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 8</size></box></geometry><material><ambient>0.55 0.65 0.80 1</ambient><diffuse>0.55 0.65 0.80 1</diffuse></material></visual></link></model>
+    <model name="b02"><static>true</static><pose> 15 -45  3.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 6</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 6</size></box></geometry><material><ambient>0.78 0.60 0.50 1</ambient><diffuse>0.78 0.60 0.50 1</diffuse></material></visual></link></model>
+    <model name="b03"><static>true</static><pose> 45 -45  2.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 5</size></box></geometry><material><ambient>0.70 0.75 0.65 1</ambient><diffuse>0.70 0.75 0.65 1</diffuse></material></visual></link></model>
+    <model name="b10"><static>true</static><pose>-45 -15  5.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 10</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 10</size></box></geometry><material><ambient>0.60 0.55 0.50 1</ambient><diffuse>0.60 0.55 0.50 1</diffuse></material></visual></link></model>
+    <model name="b11"><static>true</static><pose>-15 -15  3.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 7</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 7</size></box></geometry><material><ambient>0.90 0.80 0.40 1</ambient><diffuse>0.90 0.80 0.40 1</diffuse></material></visual></link></model>
+    <model name="b12"><static>true</static><pose> 15 -15  6.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 12</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 12</size></box></geometry><material><ambient>0.50 0.55 0.60 1</ambient><diffuse>0.50 0.55 0.60 1</diffuse></material></visual></link></model>
+    <model name="b13"><static>true</static><pose> 45 -15  3.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 6</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 6</size></box></geometry><material><ambient>0.80 0.55 0.45 1</ambient><diffuse>0.80 0.55 0.45 1</diffuse></material></visual></link></model>
+    <model name="b20"><static>true</static><pose>-45  15  4.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 8</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 8</size></box></geometry><material><ambient>0.65 0.70 0.55 1</ambient><diffuse>0.65 0.70 0.55 1</diffuse></material></visual></link></model>
+    <model name="b21"><static>true</static><pose>-15  15  7.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 15</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 15</size></box></geometry><material><ambient>0.40 0.50 0.60 1</ambient><diffuse>0.40 0.50 0.60 1</diffuse></material></visual></link></model>
+    <model name="b22"><static>true</static><pose> 15  15  3.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 6</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 6</size></box></geometry><material><ambient>0.85 0.60 0.55 1</ambient><diffuse>0.85 0.60 0.55 1</diffuse></material></visual></link></model>
+    <model name="b23"><static>true</static><pose> 45  15  4.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 9</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 9</size></box></geometry><material><ambient>0.70 0.65 0.55 1</ambient><diffuse>0.70 0.65 0.55 1</diffuse></material></visual></link></model>
+    <model name="b30"><static>true</static><pose>-45  45  3.0 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 6</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 6</size></box></geometry><material><ambient>0.75 0.70 0.65 1</ambient><diffuse>0.75 0.70 0.65 1</diffuse></material></visual></link></model>
+    <model name="b31"><static>true</static><pose>-15  45  5.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 11</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 11</size></box></geometry><material><ambient>0.55 0.50 0.50 1</ambient><diffuse>0.55 0.50 0.50 1</diffuse></material></visual></link></model>
+    <model name="b32"><static>true</static><pose> 15  45  3.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 7</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 7</size></box></geometry><material><ambient>0.80 0.75 0.70 1</ambient><diffuse>0.80 0.75 0.70 1</diffuse></material></visual></link></model>
+    <model name="b33"><static>true</static><pose> 45  45  2.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><box><size>10 10 5</size></box></geometry></collision>
+      <visual name="v"><geometry><box><size>10 10 5</size></box></geometry><material><ambient>0.65 0.60 0.55 1</ambient><diffuse>0.65 0.60 0.55 1</diffuse></material></visual></link></model>
+
+    <!-- Trees (cylinder trunk + sphere canopy) along the streets. -->
+    <model name="t0"><static>true</static><pose>-30  15 0 0 0 0</pose><link name="l">
+      <visual name="trunk"><pose>0 0 1 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry><material><ambient>0.35 0.25 0.15 1</ambient><diffuse>0.35 0.25 0.15 1</diffuse></material></visual>
+      <visual name="canopy"><pose>0 0 3 0 0 0</pose><geometry><sphere><radius>1.5</radius></sphere></geometry><material><ambient>0.20 0.55 0.25 1</ambient><diffuse>0.20 0.55 0.25 1</diffuse></material></visual></link></model>
+    <model name="t1"><static>true</static><pose> 30  15 0 0 0 0</pose><link name="l">
+      <visual name="trunk"><pose>0 0 1 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry><material><ambient>0.35 0.25 0.15 1</ambient><diffuse>0.35 0.25 0.15 1</diffuse></material></visual>
+      <visual name="canopy"><pose>0 0 3 0 0 0</pose><geometry><sphere><radius>1.5</radius></sphere></geometry><material><ambient>0.20 0.55 0.25 1</ambient><diffuse>0.20 0.55 0.25 1</diffuse></material></visual></link></model>
+    <model name="t2"><static>true</static><pose>-30 -15 0 0 0 0</pose><link name="l">
+      <visual name="trunk"><pose>0 0 1 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry><material><ambient>0.35 0.25 0.15 1</ambient><diffuse>0.35 0.25 0.15 1</diffuse></material></visual>
+      <visual name="canopy"><pose>0 0 3 0 0 0</pose><geometry><sphere><radius>1.5</radius></sphere></geometry><material><ambient>0.20 0.55 0.25 1</ambient><diffuse>0.20 0.55 0.25 1</diffuse></material></visual></link></model>
+    <model name="t3"><static>true</static><pose> 30 -15 0 0 0 0</pose><link name="l">
+      <visual name="trunk"><pose>0 0 1 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry><material><ambient>0.35 0.25 0.15 1</ambient><diffuse>0.35 0.25 0.15 1</diffuse></material></visual>
+      <visual name="canopy"><pose>0 0 3 0 0 0</pose><geometry><sphere><radius>1.5</radius></sphere></geometry><material><ambient>0.20 0.55 0.25 1</ambient><diffuse>0.20 0.55 0.25 1</diffuse></material></visual></link></model>
+    <model name="t4"><static>true</static><pose>  0  30 0 0 0 0</pose><link name="l">
+      <visual name="trunk"><pose>0 0 1 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry><material><ambient>0.35 0.25 0.15 1</ambient><diffuse>0.35 0.25 0.15 1</diffuse></material></visual>
+      <visual name="canopy"><pose>0 0 3 0 0 0</pose><geometry><sphere><radius>1.5</radius></sphere></geometry><material><ambient>0.20 0.55 0.25 1</ambient><diffuse>0.20 0.55 0.25 1</diffuse></material></visual></link></model>
+    <model name="t5"><static>true</static><pose>  0 -30 0 0 0 0</pose><link name="l">
+      <visual name="trunk"><pose>0 0 1 0 0 0</pose><geometry><cylinder><radius>0.2</radius><length>2</length></cylinder></geometry><material><ambient>0.35 0.25 0.15 1</ambient><diffuse>0.35 0.25 0.15 1</diffuse></material></visual>
+      <visual name="canopy"><pose>0 0 3 0 0 0</pose><geometry><sphere><radius>1.5</radius></sphere></geometry><material><ambient>0.20 0.55 0.25 1</ambient><diffuse>0.20 0.55 0.25 1</diffuse></material></visual></link></model>
+
+    <!-- Lampposts at the cardinal intersections.  Tall, thin — good lidar
+         test targets. -->
+    <model name="lp_n"><static>true</static><pose>  0  30 1.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry></collision>
+      <visual name="v"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="lp_s"><static>true</static><pose>  0 -30 1.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry></collision>
+      <visual name="v"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="lp_e"><static>true</static><pose> 30   0 1.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry></collision>
+      <visual name="v"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name="lp_w"><static>true</static><pose>-30   0 1.5 0 0 0</pose><link name="l">
+      <collision name="c"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry></collision>
+      <visual name="v"><geometry><cylinder><radius>0.15</radius><length>3</length></cylinder></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material></visual></link></model>
+
+    <light name="sunUTC" type="directional">
+      <pose>0 0 500 0 -0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>0.001 0.625 -0.78</direction>
+      <diffuse>0.904 0.904 0.904 1</diffuse>
+      <specular>0.271 0.271 0.271 1</specular>
+      <attenuation><range>2000</range><linear>0</linear><constant>1</constant><quadratic>0</quadratic></attenuation>
+      <spot><inner_angle>0</inner_angle><outer_angle>0</outer_angle><falloff>0</falloff></spot>
+    </light>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>47.397971057728974</latitude_deg>
+      <longitude_deg> 8.546163739800146</longitude_deg>
+      <elevation>0</elevation>
+    </spherical_coordinates>
+  </world>
+</sdf>
