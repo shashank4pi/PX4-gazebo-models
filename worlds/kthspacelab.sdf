@@ -331,5 +331,111 @@
         </visual>
       </link>
     </model>
+
+    <!-- Interior obstacles for Demo 3 (indoor autonomy).
+         Room bounds roughly X:[0, 4.1], Y:[-1.6, 2.3] (~4m x 4m), so obstacles
+         are scaled down: 0.3 x 0.3 x 1.0 m, spaced ~1 m apart, leaving usable
+         navigation corridors between them. -->
+    <model name="obstacle_1">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material>
+            <ambient>1 0.5 0 1</ambient>
+            <diffuse>1 0.5 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>1.2 -0.6 0.5 0 0 0</pose>
+    </model>
+
+    <model name="obstacle_2">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material>
+            <ambient>1 0.5 0 1</ambient>
+            <diffuse>1 0.5 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>1.2 1.2 0.5 0 0 0</pose>
+    </model>
+
+    <model name="obstacle_3">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material>
+            <ambient>1 0.5 0 1</ambient>
+            <diffuse>1 0.5 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>2.5 -0.6 0.5 0 0 0</pose>
+    </model>
+
+    <model name="obstacle_4">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material>
+            <ambient>1 0.5 0 1</ambient>
+            <diffuse>1 0.5 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>2.5 1.2 0.5 0 0 0</pose>
+    </model>
+
+    <model name="obstacle_5">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material>
+            <ambient>1 0.5 0 1</ambient>
+            <diffuse>1 0.5 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>3.4 0.3 0.5 0 0 0</pose>
+    </model>
+
+    <model name="obstacle_6">
+      <static>1</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.3 0.3 1.0</size></box></geometry>
+          <material>
+            <ambient>1 0.5 0 1</ambient>
+            <diffuse>1 0.5 0 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      <pose>0.6 0.3 0.5 0 0 0</pose>
+    </model>
   </world>
 </sdf>
